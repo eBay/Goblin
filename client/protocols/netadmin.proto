@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package gringofts.app.protos;
+
+// The netAdmin service definition.
+service AppNetAdmin {
+  rpc CreateSnapshot (CreateSnapshot.Request) returns (CreateSnapshot.Response) {}
+  rpc TruncatePrefix (TruncatePrefix.Request) returns (TruncatePrefix.Response) {}
+  // get member offsets
+  rpc GetMemberOffsets(GetMemberOffsets.Request) returns (GetMemberOffsets.Response) {}
+}
+
+message CreateSnapshot {
+  message Request {
+
+  }
+  enum ResponseType {
+    UNKNOWN = 0;
+    PROCESSING = 1;
+    SUCCESS = 2;
+    FAILED = 3;
+  }
+  message Response {
+    ResponseType type = 1;
+    string message = 2;
+  }
+}
+
+message TruncatePrefix {
+  message Request {
+    uint64 firstIndexKept = 1;
+  }
+  enum ResponseType {
+    UNKNOWN = 0;
+    PROCESSING = 1;
+    SUCCESS = 2;
+    FAILED = 3;
+  }
+  message Response {
+    ResponseType type = 1;
+    string message = 2;
+  }
+}
+
+message ServerOffsetInfo {
+  // format: id@ip:port
+  string server = 1;
+  uint64 offset = 2;
+}
+
+message GetMemberOffsets {
+  message Request {
+
+  }
+  message Response {
+    ResponseHeader header = 1;
+    // example: id1@ip1:port, id2@ip2:port, etc
+    ServerOffsetInfo leader = 2;
+    repeated ServerOffsetInfo followers = 3;
+  }
+}
+
+message ResponseHeader {
+  uint32 code = 1;      // 200 and 201 for ok, 400 for client error, 102, 301 and 503 for PU not available
+  string message = 2;   // message info returned by PU
+  string reserved = 3;  // leaderHint
+}

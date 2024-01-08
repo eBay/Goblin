@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - master
+  schedule:
+    # runs every day at 23:00
+    - cron:  '0 23 * * *'
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up submodules
+        run: cd server && bash ./scripts/addSubmodules.sh
+
+      - name: Build with docker
+        run: docker run --workdir "$GITHUB_WORKSPACE" --mount type=bind,source="$GITHUB_WORKSPACE",target="$GITHUB_WORKSPACE" --user "$(id -u)":"$(id -g)" gringofts/coverage:v1 hooks/pre-commit
+
+
+  Lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Cpp Lint
+        uses: CyberZHG/github-action-cpp-lint@master
+
+      - name: Run ShellCheck
+        uses: bewuethr/shellcheck-action@v1

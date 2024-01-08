@@ -1,0 +1,4 @@
+#!/bin/sh
+cd server
+bash ./scripts/build.sh
+

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+import "transfer.proto";
+
+package goblin.proto;
+
+message UserDefine {
+  enum CommandType {
+    INVALID = 0;
+    TRANSFER = 1;
+  }
+}
+
+// user-defined meta
+message UserDefinedMeta {
+  // number -- save seqNum for thunder case
+  repeated uint64 uintField = 1;
+  // string 
+  repeated string strField = 2;
+}
