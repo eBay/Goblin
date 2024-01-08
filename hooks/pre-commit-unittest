@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+echo "running unit tests" &&
+  cd server/build && ./TestRunner

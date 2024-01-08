@@ -1,0 +1,3 @@
+[submodule "server/Gringofts"]
+	path = server/Gringofts
+	url = https://github.com/eBay/Gringofts

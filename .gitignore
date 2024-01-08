@@ -1,0 +1,104 @@
+# IDE related #
+###############
+.idea/
+.vscode/
+*.iml
+esamscache
+esamscachetaskexecutor
+nameservice
+.classpath
+.factorypath
+.project
+.settings/
+.DS_Store
+
+# Compile related #
+###################
+build/
+debug/
+pkg/
+pkgOM/
+pkgOS/
+cmake-build-debug
+cmake_install.cmake
+compile_commands.json
+CMakeCache.txt
+Makefile
+CMakeFiles/
+*.cbp
+server/conf
+server/om/
+server/os1/
+server/os2/
+server/os3/
+
+# doc related #
+###############
+
+# auto-gen code #
+#################
+generated/
+
+# Test-related #
+################
+server/test/output
+server/test/store/tempData
+
+# SonarQube #
+#############
+
+# Core files #
+##############
+core
+
+# submodules #
+##############
+third_party/
+
+# java #
+##############
+bin/
+target/
+
+clientconfig
+enevelopeapi
+raptor.xml
+temp_persist_config_*.xml
+ThreadLocalFlushBean.xml
+TomcatThreadPoolSizeBean
+XslTransformObjectCacheConfig64.xml
+EchoService.InvokerConfigurations-persist.xml
+.mvn/
+mvnw
+mvnw.cmd
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+settings.xml
+
+server/.cmake
+server/Testing/
+
