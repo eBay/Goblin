@@ -31,8 +31,11 @@ Goblin is built on top of [Gringofts](https://github.com/eBay/Gringofts), an ope
 ## High performance
 Goblin provide stable, sustained high performance. Two factors define performance: latency and throughput. Latency is the time taken to complete an operation. Throughput is the total operations completed within some time period.
 
-Here are the rough performance metrics based on the 1k payload size. For detailed metrics, please see [Benchmark](./doc/BENCHMARK.md).
-### Throughput
+Here are the rough performance metrics based on the 1KB payload size for one cluster. For detailed metrics, please see [Benchmark](./doc/BENCHMARK.md).
+
+Furthermore, all the performance data for Goblin provided here is based on testing a single cluster. It is important to emphasize that Goblin supports [sharding](./doc/sharding.md), allowing for horizontal scaling by deploying multiple clusters to achieve greater throughput performance. With the provision of additional machine resources, achieving a million-level TPS (transactions per second) is also feasible.
+
+### Throughput for Single Cluster
 | Operation | Max TPS/QPS                    |
 | --- |--------------------------------|
 | Write | 23k                            |
@@ -40,11 +43,20 @@ Here are the rough performance metrics based on the 1k payload size. For detaile
 | Read | 100k+ for 5 nodes in a cluster |
 
 ### Latency
-| Operation | P99 Latency from Client | P50 Latency from Client |
-| --- | --- |-------------------------|
-| Write | 39ms | 23ms                    |
-| Leader Read | 14ms | < 1ms                   |
-| Follower Read | 3ms | < 1ms                   |
+The total latency from client side will be affected by client-server latency, thus following latency statistics are collected from server side without considering client-server latency.
+#### Server Deployment in One DataCenter
+| Operation | P99 Latency| P50 Latency |
+| --------- | --------- |--------------|
+| Write | 21ms | 8ms |
+| Leader Read | < 1ms | < 1ms|
+| Follower Read | < 1ms | < 1ms|
+
+#### Server Deployment in Distributed DataCenters
+| Operation | P99 Latency | P50 Latency|
+| --------- | --------- |--------------|
+| Write | 26ms | 16ms |
+| Leader Read | < 1ms | < 1ms|
+| Follower Read | < 1ms | < 1ms|
 
 
 ## 100% State Reproducibility
@@ -62,7 +74,7 @@ This feature is also useful for testing and debugging. For example, if you want 
 ```
 cd server && sudo bash ./scripts/setupDevEnvironment.sh
 ```
-Or use https://hub.docker.com/r/gringofts/coverage:v1 directly
+Or use hub.tess.io/magellan/grinkv:compile.v10 directly
 ### Pull Third-Party & Submodule Codes
 ```
 cd server && bash ./scripts/addSubmodules.sh
@@ -103,9 +115,9 @@ cd server/build && ./TestRunner
 A Maven based Java project is provided in Goblin/client and can be used as a dependency in a Java based application or other JVM based languages such as Groovy, Scala etc.
 
 ### Getting Started
-clone this repo
+clone this repo or https://github.corp.ebay.com/Magellan/GoblinClient.git
 ```bash
-cd Goblin/client/goblin-java-client
+cd Goblin/client
 mvn clean install
 ```
 
@@ -113,12 +125,12 @@ mvn clean install
 Most Goblin users will be creating a java application that will be reading and writing data to and from Goblin server.
 * [Sample App using Goblin Java Client](./doc/sample_app.md)
 
-For more details on how to initialize an app and learn more about the different operations with the client, see [Client API Reference for Java](./doc/client_api_reference.md)
+For more details on how to initialize an app and learn more about the different operations with the client, see the [Client Reference for Raptor.io](./doc/client_reference_for_raptorio.md) and the [Client API Reference for Java](./doc/client_api_reference.md)
 
 ### Sample Usage
 All interactions with this library can be performed using the GoblinClient class. ``GoblinClient client = GoblinClient.newInstance(config)``
 
-The [SampleGoblinClient.java](client/goblin-java-client/src/main/java/com/ebay/goblin/sample/SampleGoblinClient.java) file includes instances of using the client. To run it as an application, you can easily execute the SampleGoblinClient.main() function.
+The SampleGoblinClient.java file includes instances of using the client. To run it as an application, you can easily execute the SampleGoblinClient.main() function.
 #### Put
 ```java
     private static void samplePut(GoblinClient client) {
