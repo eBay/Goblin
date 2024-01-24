@@ -27,23 +27,44 @@ Goblin provide stable, sustained high performance. Two factors define performanc
 | Raft AE max payload             | 50M| 
 | Raft AE max size                | 2000| 
 
-Performance metrics below are based on payload size 1k.
-### Extreme Performance
-|Test Case | QPS | P99 Latency from Client | P50 Latency from Client|
-|----------|-----|-------------------------|------------------------|
-|Leader Write | 23k | 81ms | 34ms|
-|Leader Read | 26k | 23.3ms | 3.7ms|
-|Follower Read | 10.3w | 5ms | 0.78ms|
-|Leader Read Exist & Write | Write: 3.8k Read: 24.4k | Write: 50ms Read: 53ms | Write: 29ms Read: 15ms|
-|Leader Read Nonexist & Write | Write: 3.3k Read: 24k | Write: 66ms Read: 52ms | Write: 31ms Read: 14.8ms|
-|Leader Delete | 25k | 52ms | 33ms|
+Since the system implemented based on Raft needs to replicate Raft logs across data centers, the request latency will be affected by the RTT(Round Trip Time) between data centers. Basically, there are two kinds of deployments for a five nodes Goblin cluster:
+|Type |Deployments | Nodes Distribution | RTT|
+|-----|----------|---------------|-----------|
+|Across DC|3 data center| 2-2-1| about 10ms|
+|Same DC|Same data center| 5 | < 1ms |
 
-### Low Pressure Performance
-| Test Case                    | QPS | P99 Latency from Client | P50 Latency from Client|
+Performance metrics below are all based on payload size 1KB.
+### Extreme Performance on "Across DC" Deployment
+|Test Case | QPS/TPS | P99 Latency| P50 Latency|
+|----------|-----|-------------------------|------------------------|
+|Leader Write | 23k |136ms | 26ms|
+|Leader Read | 26k | 10ms | 1.38ms|
+|Follower Read | 10.3w | 1.07ms | 0.24ms|
+|Leader Read Exist & Write | Write: 3.8k Read: 24.4k | Write: 38ms Read: 13.4ms | Write: 20.3ms Read: 1ms|
+|Leader Read Nonexist & Write | Write: 3.3k Read: 24k | Write: 38.5ms Read: 25.6ms | Write: 20s Read: 3.6ms|
+|Leader Delete | 25k | 39ms | 25.3ms|
+
+### Low Pressure Performance on "Same DC" Deployment
+| Test Case                    | QPS/TPS | P99 Latency| P50 Latency|
 |------------------------------|-----|-------------------------|------------------------|
-| Leader Write                 | 216 | 39ms | 23ms| 
-|  Leader Read                  | 1909 | 13.8ms | 0.75ms| 
-|  Follower Read                | 5242 | 2.8ms | 0.6ms| 
-|  Leader Read Exist & Write    | Write: 228 Read: 1915 | Write: 37ms Read: 13ms | Write: 23ms Read: 0.73ms| 
-|  Leader Read Nonexist & Write | Write: 226 Read: 1905 | Write: 37ms Read: 13ms | Write: 23ms Read: 0.73ms| 
-| Leader Delete                | 235 | 36ms | 22ms| 
+| Leader Write                 | 319 | 21ms | 8ms|
+|  Leader Read Exist & Write    | Write: 335 Read: 1846 | Write: 21.6ms Read: 0.35ms | Write: 8.4ms Read: 0.06ms| 
+|  Leader Read Nonexist & Write | Write: 336 Read: 1881 | Write: 21.6ms Read: 0.36ms | Write: 8.4ms Read: 0.07ms| 
+| Leader Delete                | 317 | 20.7ms | 8ms|
+
+### Low Pressure Performance on "Across DC" Deployment
+| Test Case                    | QPS/TPS | P99 Latency| P50 Latency|
+|------------------------------|-----|-------------------------|------------------------|
+| Leader Write                 | 215 | 26.4ms | 16.2ms| 
+|  Leader Read                  | 1906 | 0.45ms | 0.25ms| 
+|  Follower Read                | 5105 | 0.53ms | 0.26ms| 
+|  Leader Read Exist & Write    | Write: 228 Read: 1904 | Write: 25.6ms Read: 0.41ms | Write: 18.2ms Read: 0.24ms| 
+|  Leader Read Nonexist & Write | Write: 227 Read: 1911 | Write: 26ms Read: 0.4ms | Write: 18.2ms Read: 0.24ms| 
+| Leader Delete                | 225 | 26ms | 16ms| 
+
+### Performance Tendency
+#### Workload at 100% Write
+![Write](images/write.png)
+
+#### Workload at 100% Read
+![Read](images/read.png)
