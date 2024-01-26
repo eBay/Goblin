@@ -4,6 +4,8 @@ Goblin is an infrastructure that provides flexible ways of processing and storin
 
 Goblin is built on top of [Gringofts](https://github.com/eBay/Gringofts), an open-source project which provides Raft consensus for replication. It aims to provide key-value storing service with strong consistency, high reliability, high availability, scalability and performance.
 
+
+
 # Functional Features
 1. Support [basic kv operations (put/get/delete)](./doc/kv.md)
 2. Support [CAS (compare-and-swap) operation](./doc/cas.md)
