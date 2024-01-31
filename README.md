@@ -115,9 +115,9 @@ cd server/build && ./TestRunner
 A Maven based Java project is provided in Goblin/client and can be used as a dependency in a Java based application or other JVM based languages such as Groovy, Scala etc.
 
 ### Getting Started
-clone this repo or https://github.corp.ebay.com/Magellan/GoblinClient.git
+clone this repo and build
 ```bash
-cd Goblin/client
+cd client
 mvn clean install
 ```
 
@@ -125,12 +125,11 @@ mvn clean install
 Most Goblin users will be creating a java application that will be reading and writing data to and from Goblin server.
 * [Sample App using Goblin Java Client](./doc/sample_app.md)
 
-For more details on how to initialize an app and learn more about the different operations with the client, see the [Client Reference for Raptor.io](./doc/client_reference_for_raptorio.md) and the [Client API Reference for Java](./doc/client_api_reference.md)
-
 ### Sample Usage
 All interactions with this library can be performed using the GoblinClient class. ``GoblinClient client = GoblinClient.newInstance(config)``
 
-The SampleGoblinClient.java file includes instances of using the client. To run it as an application, you can easily execute the SampleGoblinClient.main() function.
+The [SampleGoblinClient.java](./client/goblin-java-client/src/main/java/com/ebay/goblin/sample/SampleGoblinClient.java) file includes instances of using the client. To run it as an application, you can easily execute the SampleGoblinClient.main() function.
+Kindly be aware that the default cluster info is set to ``1@0.0.0.0:50055,2@0.0.0.0:50056,3@0.0.0.0:50057``. An update may be necessary to use the server endpoints set up above.
 #### Put
 ```java
     private static void samplePut(GoblinClient client) {
@@ -197,6 +196,7 @@ The SampleGoblinClient.java file includes instances of using the client. To run 
         deleteResponse = client.delete(key, putResponse.getVersion(), false);
     }
 ```
+To learn more about the different operations with the client, see the [Client API Reference for Java](./doc/client_api_reference.md)
 
 ### Grpcurl
 If you don't want to use the java client, you could also use grpcurl to mock requests from grpc client and fill requests in json format. The grpc service and request/response are defined at Goblin/protocol/service.proto.

@@ -23,7 +23,7 @@ public class SampleGoblinClient {
          * "<node_id_1>@<host1>:<port1>,<node_id_2>@<host2>:<port2>,<node_id_3>@<host3>:<port3>,..."
          */
         RaftClusterClientConfig config = RaftClusterClientConfig.builder()
-                .clusterInfo("1@localhost:50055")
+                .clusterInfo("1@0.0.0.0:50055,2@0.0.0.0:50056,3@0.0.0.0:50057")
                 .tlsEnabled(true)
                 .sslContext(GrpcSslContexts.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build())
                 .timeoutInMilliSeconds(10000L)
