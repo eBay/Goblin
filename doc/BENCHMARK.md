@@ -27,14 +27,14 @@ Goblin provide stable, sustained high performance. Two factors define performanc
 | Raft AE max payload             | 50M| 
 | Raft AE max size                | 2000| 
 
-Since the system implemented based on Raft needs to replicate Raft logs across data centers, the request latency will be affected by the RTT(Round Trip Time) between data centers. Basically, there are two kinds of deployments for a five nodes Goblin cluster:
+Since the system implemented based on Raft needs to replicate Raft logs Cross data centers, the request latency will be affected by the RTT(Round Trip Time) between data centers. Basically, there are two kinds of deployments for a five nodes Goblin cluster:
 |Type |Deployments | Nodes Distribution | RTT|
 |-----|----------|---------------|-----------|
-|Across DC|3 data center| 2-2-1| about 10ms|
+|Cross DC|3 data center| 2-2-1| about 10ms|
 |Same DC|Same data center| 5 | < 1ms |
 
 Performance metrics below are all based on payload size 1KB.
-### Extreme Performance on "Across DC" Deployment
+### Extreme Performance on "Cross DC" Deployment
 |Test Case | QPS/TPS | P99 Latency| P50 Latency|
 |----------|-----|-------------------------|------------------------|
 |Leader Write | 23k |136ms | 26ms|
@@ -52,7 +52,7 @@ Performance metrics below are all based on payload size 1KB.
 |  Leader Read Nonexist & Write | Write: 336 Read: 1881 | Write: 21.6ms Read: 0.36ms | Write: 8.4ms Read: 0.07ms| 
 | Leader Delete                | 317 | 20.7ms | 8ms|
 
-### Low Pressure Performance on "Across DC" Deployment
+### Low Pressure Performance on "Cross DC" Deployment
 | Test Case                    | QPS/TPS | P99 Latency| P50 Latency|
 |------------------------------|-----|-------------------------|------------------------|
 | Leader Write                 | 215 | 26.4ms | 16.2ms| 

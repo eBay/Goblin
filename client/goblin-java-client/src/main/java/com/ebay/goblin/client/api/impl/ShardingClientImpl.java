@@ -140,7 +140,7 @@ public class ShardingClientImpl implements GoblinClient {
                     request.getAllRequests().isEmpty()) {
                 throw new GoblinInvalidRequestException("invalid transaction");
             }
-            // TODO: support multiple keys for distributed transaction across clusters
+            // TODO: support multiple keys for distributed transaction cross clusters
             // PHASE1: support multiple keys for transactions within one cluster (shard)
             // check if keys are located in one shard
             ArrayList<String> keyList = new ArrayList<String>();
@@ -163,7 +163,7 @@ public class ShardingClientImpl implements GoblinClient {
             boolean isInOneShard = shardingInfo.isInSameShard(keyList);
             if (!isInOneShard) {
                 LogUtils.error("transaction keys are not in one shard");
-                throw new GoblinInvalidRequestException("keys across clusters in one transaction not supported");
+                throw new GoblinInvalidRequestException("keys cross clusters in one transaction not supported");
             }
             String keyForRouting = keyList.isEmpty() ? "dummyForRouting" : keyList.get(0);
             TransResponse resp = execute(
@@ -182,7 +182,7 @@ public class ShardingClientImpl implements GoblinClient {
                 LogUtils.error("invalid key number to watch");
                 throw new GoblinInvalidRequestException("empty key entries to watch");
             }
-            // TODO: support multiple keys to watch across clusters
+            // TODO: support multiple keys to watch cross clusters
             WatchAckResponse response = execute(
                     request, request.getWatchEntries().get(0).getKey().getKey(),
                     (req, client) -> client.asyncWatch(req)

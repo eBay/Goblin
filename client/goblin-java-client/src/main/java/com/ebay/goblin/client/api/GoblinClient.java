@@ -267,7 +267,7 @@ public interface GoblinClient extends AutoCloseable {
 
     GenerateResponse generate(GenerateRequest request);
 
-    // TODO: support generate across sharding clusters
+    // TODO: support generate cross sharding clusters
     default GenerateResponse generate(
             Userdefine.UserDefine.CommandType cmdType,
             List<KeyType> srcKeys,

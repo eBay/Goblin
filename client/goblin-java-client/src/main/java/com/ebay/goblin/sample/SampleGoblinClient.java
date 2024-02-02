@@ -24,8 +24,8 @@ public class SampleGoblinClient {
          */
         RaftClusterClientConfig config = RaftClusterClientConfig.builder()
                 .clusterInfo("1@0.0.0.0:50055,2@0.0.0.0:50056,3@0.0.0.0:50057")
-                .tlsEnabled(true)
-                .sslContext(GrpcSslContexts.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build())
+              //.tlsEnabled(true)
+              //.sslContext(GrpcSslContexts.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build())
                 .timeoutInMilliSeconds(10000L)
                 .stubTimeoutInMilliSeconds(10000L)
                 .build();
