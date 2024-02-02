@@ -74,7 +74,7 @@ This feature is also useful for testing and debugging. For example, if you want 
 ```
 cd server && sudo bash ./scripts/setupDevEnvironment.sh
 ```
-Or use hub.tess.io/magellan/grinkv:compile.v10 directly
+
 ### Pull Third-Party & Submodule Codes
 ```
 cd server && bash ./scripts/addSubmodules.sh
@@ -87,11 +87,13 @@ cd server
 ```
 #### Run
 ##### Start object manager (OM)
+Object manager is a cluster that stores addresses of all object store clusters. Clients should config OM address and query OM to get OS address after starting up.
 ```bash
 cd server
 ./example/object-manager-three-nodes/runCluster.sh
 ```
 ##### Start object store (OS)
+Object store is data storage clusters, and it servers put/get/delete... traffics from clients.
 ```bash
 cd server
 ./example/object-store-three-nodes/cluster1/runCluster.sh
@@ -101,7 +103,7 @@ cd server
 cd server
 ./example/object-store-three-nodes/cluster1/addCluster.sh
 ```
-After steps above, the Goblin server should be set up. It can be accessed via the endpoints from the client:
+After steps above, the Goblin server should be set up. OM can be accessed via the endpoints from the client:
 ```
 1@0.0.0.0:50055,2@0.0.0.0:50056,3@0.0.0.0:50057
 ```
@@ -117,7 +119,7 @@ A Maven based Java project is provided in Goblin/client and can be used as a dep
 ### Getting Started
 clone this repo and build
 ```bash
-cd client
+cd client/goblin-java-client
 mvn clean install
 ```
 
@@ -226,19 +228,17 @@ cat put.json
 ```
 
 ```bash
-cd Goblin/protocols
-grpcurl  -cacert server.crt -d @ --import-path ./ --proto service.proto 10.147.151.96:50055 goblin.proto.KVStore/Put < put.json
-## grpcurl -insecure -d @ --import-path ./ --proto service.proto 10.147.151.96:50055 goblin.proto.KVStore/Put < put.json
-
+cd protocols
+grpcurl -plaintext  -d @ --import-path ./ --proto service.proto 0.0.0.0:60057 goblin.proto.KVStore/Put < put.json
 {
   "header": {
     "code": "OK",
     "message": "Success",
-    "latestVersion": "116"
+    "latestVersion": "1"
   },
   "result": {
     "code": "OK",
-    "version": "116"
+    "version": "1"
   }
 }
 ```
@@ -257,9 +257,8 @@ cat get.json
 ```
 
 ```bash
-cd Goblin/protocols
-grpcurl  -cacert server.crt -d @ --import-path ./ --proto service.proto 10.147.151.96:50055 goblin.proto.KVStore/Get < get.json
-## grpcurl -insecure -d @ --import-path ./ --proto service.proto 10.147.151.96:50055 goblin.proto.KVStore/Get < get.json
+cd protocols
+grpcurl -plaintext -d @ --import-path ./ --proto service.proto 0.0.0.0:60057 goblin.proto.KVStore/Get < get.json
 {
   "header": {
     "code": "OK",
