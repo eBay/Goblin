@@ -68,12 +68,13 @@ This feature is also useful for testing and debugging. For example, if you want 
 
 # Get Started
 ## Supported Platforms
-- Ubuntu 20.04
+- Ubuntu 20.04, x86_64
 ## Server Setup
-### Install Dependency
+### Install Dependency (one-time setup)
 ```
 cd server && sudo bash ./scripts/setupDevEnvironment.sh
 ```
+(This step is time consuming, alternatively, image gringofts/coverage:v1(https://hub.docker.com) could be directly used and it has installed all dependency for Goblin server)
 
 ### Pull Third-Party & Submodule Codes
 ```
@@ -83,7 +84,7 @@ cd server && bash ./scripts/addSubmodules.sh
 #### Build
 ```bash
 cd server
-./scripts/build.sh
+bash ./scripts/build.sh
 ```
 #### Run
 ##### Start object manager (OM)
@@ -120,6 +121,7 @@ A Maven based Java project is provided in Goblin/client and can be used as a dep
 clone this repo and build
 ```bash
 cd client/goblin-java-client
+apt install maven
 mvn clean install
 ```
 
