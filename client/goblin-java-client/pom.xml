@@ -55,7 +55,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
+            <version>3.18.0</version>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
@@ -128,15 +128,15 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <tasks>
-                                <property name="src.dir" value="${project.build.sourceDirectory}" />
-                                <property name="package.dir" value="com/ebay/goblin/client/utils" />
-                                <property name="package.name" value="com.ebay.goblin.client.utils" />
+                                <property name="src.dir" value="${project.build.sourceDirectory}"/>
+                                <property name="package.dir" value="com/ebay/goblin/client/utils"/>
+                                <property name="package.name" value="com.ebay.goblin.client.utils"/>
 
-                                <echo file="${src.dir}/${package.dir}/ClientVersion.java" message="package ${package.name};${line.separator}" />
-                                <echo file="${src.dir}/${package.dir}/ClientVersion.java" append="true" message="public final class ClientVersion {${line.separator}" />
-                                <echo file="${src.dir}/${package.dir}/ClientVersion.java" append="true" message="   public static String VERSION=&quot;${project.version}&quot;;${line.separator}" />
-                                <echo file="${src.dir}/${package.dir}/ClientVersion.java" append="true" message="}${line.separator}" />
-                                <echo message="BUILD ${parent.version}" />
+                                <echo file="${src.dir}/${package.dir}/ClientVersion.java" message="package ${package.name};${line.separator}"/>
+                                <echo file="${src.dir}/${package.dir}/ClientVersion.java" append="true" message="public final class ClientVersion {${line.separator}"/>
+                                <echo file="${src.dir}/${package.dir}/ClientVersion.java" append="true" message="   public static String VERSION=&quot;${project.version}&quot;;${line.separator}"/>
+                                <echo file="${src.dir}/${package.dir}/ClientVersion.java" append="true" message="}${line.separator}"/>
+                                <echo message="BUILD ${parent.version}"/>
                             </tasks>
                         </configuration>
                     </execution>
